@@ -484,9 +484,10 @@ int wl12xx_cmd_role_start_sta(struct wl1271 *wl, struct wl12xx_vif *wlvif)
 	cmd->sta.remote_rates = cpu_to_le32(supported_rates);
 
 	wl1271_debug(DEBUG_CMD, "role start: roleid=%d, hlid=%d, session=%d "
-		     "basic_rate_set: 0x%x, remote_rates: 0x%x",
+		     "basic_rate_set: 0x%x, remote_rates: 0x%x chan_type: %d",
 		     wlvif->role_id, cmd->sta.hlid, cmd->sta.session,
-		     wlvif->basic_rate_set, wlvif->rate_set);
+		     wlvif->basic_rate_set, wlvif->rate_set,
+		     cmd->channel_type);
 
 	wl1271_dump(DEBUG_CMD, "START_STA: ", cmd, sizeof(*cmd));
 
@@ -610,8 +611,8 @@ int wl12xx_cmd_role_start_ap(struct wl1271 *wl, struct wl12xx_vif *wlvif)
 	supported_rates = CONF_TX_AP_ENABLED_RATES | CONF_TX_MCS_RATES |
 		wlcore_hw_ap_get_mimo_wide_rate_mask(wl, wlvif);
 
-	wl1271_debug(DEBUG_CMD, "cmd role start ap with supported_rates 0x%08x",
-		     supported_rates);
+	wl1271_debug(DEBUG_CMD, "cmd role start ap with supported_rates 0x%08x"
+		     " chan type: %d", supported_rates, cmd->channel_type);
 
 	cmd->ap.local_rates = cpu_to_le32(supported_rates);
 
